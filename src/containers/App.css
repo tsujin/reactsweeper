@@ -1,28 +1,83 @@
-.App {
+/* wrappers */
+.game-container {
+  margin: 10px;
+  background: lightgrey;
+  float: left;
+  border: 6px solid grey;
+}
+
+/* cells */
+.cell, .cell-closed {
+  float: left;
+  height: 25px;
+  width: 25px;
+  text-align: center;
+  padding: 0;
+  margin-right: -1px;
+  margin-top: -1px;
+}
+
+.cell {
+  background: lightgray;
+  border-style: outset;
+  border-top: 2px outset white;
+  border-left: 2px outset white;
+  border-bottom: 2px outset gray;
+  border-right: 2px outset gray;
+}
+
+.cell-closed {
+  background: #lightgray;
+  border: 1px solid #999;
+}
+
+.cell, .cell-closed:focus {
+  outline: none;
+}
+
+/* board */
+.board {
+  border-right: 2px outset white;
+  border-bottom: 2px outset white;
+  border-left: 2px outset gray;
+  border-top: 2px outset gray;
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+/* board header and items */
+.board-header {
+  margin-bottom: 50px;
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.timer, .flags {
+  font-size: 25px;
+  font-family: "Roboto Sans", monospace;
+  background: black;
+  color: red;
+  text-align: center;
+  width: 40px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.flags {
+  padding: 5px;
+  float: left;
+  margin: 5px;
 }
 
-.App-title {
-  font-size: 1.5em;
+.emoji {
+  width: 20px;
+  display: inline-block;
+  margin: 0 auto;
 }
 
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.timer {
+  padding: 5px;
+  float: right;
+  margin: 5px;
 }
