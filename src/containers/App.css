@@ -1,9 +1,13 @@
 /* wrappers */
 .game-container {
-  margin: 10px;
   background: lightgrey;
   float: left;
   border: 6px solid grey;
+}
+
+#root {
+  display: inline-block;
+  padding-top: 10%;
 }
 
 /* cells */
