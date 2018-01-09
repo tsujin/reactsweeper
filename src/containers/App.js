@@ -6,18 +6,14 @@ export default class App extends Component {
     super();
     this.newGame = this.newGame.bind(this);
     this.state = {
-      game: () => <Game />
+      game: () => <Game bombs={10} sides={9} />
     }
   }
 
-  newGame() {
+  newGame(bombs, sides) {
     this.setState({
-      game: () => <Game />
+      game: () => <Game bombs={bombs} sides={sides} />
     })
-  }
-
-  componentDidMount() {
-    console.log("mounted successfully")
   }
 
   render() {
@@ -25,7 +21,11 @@ export default class App extends Component {
     return(
       <div>
         <CurrentGame />
-        <button onClick={this.newGame}>Reset Game</button>
+        <div className="button-row">
+          <button className="beginner" onClick={() => this.newGame(10, 9)}>Beginner</button>
+          <button className="intermediate" onClick={() => this.newGame(40, 16)}>Intermediate</button>
+          <button className="expert" onClick={() => this.newGame(200, 30)}>Expert</button>
+        </div>
       </div>
     )
   }

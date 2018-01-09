@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
 import './Game.css';
 
-import isValid from 'lib/isValid.js';
 import Board from 'components/Board.js';
 import Cell from 'components/Cell.js'
 
-export const SIDES = 9;
-export const BOMBS = 10;
-
 export class Game extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      cells: this.setCells(SIDES),
-      flags: BOMBS,
+      cells: this.setCells(),
+      flags: this.props.bombs,
       emoji: '😐',
       clock: 0,
     }
@@ -23,14 +19,18 @@ export class Game extends Component {
     this.tick = this.tick.bind(this);
     this.playing = true;
     this.firstclick = true;
-    this.movesRemaining = SIDES * SIDES - BOMBS;
+    this.movesRemaining = this.props.sides * this.props.sides - this.props.bombs;
   }
 
-  setCells(sides) {
+  isValid(row, col) {
+      return row >= 0 && row < this.props.sides && col >= 0 && col < this.props.sides
+  }
+
+  setCells() {
     var arr = [];
-    for (let x=0; x<SIDES; x++) {
+    for (let x=0; x<this.props.sides; x++) {
       arr[x] = [];
-      for (let y=0; y<SIDES; y++) {
+      for (let y=0; y<this.props.sides; y++) {
         arr[x][y] = new Cell();
       }
     }
@@ -41,7 +41,7 @@ export class Game extends Component {
     let count = 0;
     for (let i = x-1; i<x+2; i++) {
       for (let j = y-1; j<y+2; j++) {
-        if (isValid(i, j) && this.board[i][j].isOpen && this.board[i][j].hasBomb) {
+        if (this.isValid(i, j) && this.board[i][j].isOpen && this.board[i][j].hasBomb) {
           count++;
         }
       }
@@ -54,42 +54,42 @@ export class Game extends Component {
     this.board[x][y].isOpen = false;
     let count = this.countNeighboringBombs(x, y);
     if (!count) {
-      if (isValid(x-1, y)) {
+      if (this.isValid(x-1, y)) {
         if (this.board[x-1][y].isOpen && !this.board[x-1][y].hasBomb) {
           this.closeCells(x-1, y)
         }
       }
-      if (isValid(x+1, y)) {
+      if (this.isValid(x+1, y)) {
         if (this.board[x+1][y].isOpen && !this.board[x+1][y].hasBomb) {
           this.closeCells(x+1, y)
         }
       }
-      if (isValid(x, y-1)) {
+      if (this.isValid(x, y-1)) {
         if (this.board[x][y-1].isOpen && !this.board[x][y-1].hasBomb) {
           this.closeCells(x, y-1)
         }
       }
-      if (isValid(x, y+1)) {
+      if (this.isValid(x, y+1)) {
         if (this.board[x][y+1].isOpen && !this.board[x][y+1].hasBomb) {
           this.closeCells(x, y+1)
         }
       }
-      if (isValid(x-1, y+1)) {
+      if (this.isValid(x-1, y+1)) {
         if (this.board[x-1][y+1].isOpen && !this.board[x-1][y+1].hasBomb) {
           this.closeCells(x-1, y+1)
         }
       }
-      if (isValid(x+1, y-1)) {
+      if (this.isValid(x+1, y-1)) {
         if (this.board[x+1][y-1].isOpen && !this.board[x+1][y-1].hasBomb) {
           this.closeCells(x+1, y-1)
         }
       }
-      if (isValid(x-1, y-1)) {
+      if (this.isValid(x-1, y-1)) {
         if (this.board[x-1][y-1].isOpen && !this.board[x-1][y-1].hasBomb) {
           this.closeCells(x-1, y-1)
         }
       }
-      if (isValid(x+1, y+1)) {
+      if (this.isValid(x+1, y+1)) {
         if (this.board[x+1][y+1].isOpen && !this.board[x+1][y+1].hasBomb) {
           this.closeCells(x+1, y+1)
         }
@@ -116,8 +116,8 @@ export class Game extends Component {
       this.firstclick = false;
       if (this.board[x][y].hasBomb) {
         loop1:
-        for (let row=0; row<SIDES; row++) {
-          for (let col=0; col<SIDES; col++) {
+        for (let row=0; row<this.props.sides; row++) {
+          for (let col=0; col<this.props.sides; col++) {
             if (!this.board[row][col].hasBomb && this.board[row][col] !== this.board[x][y]) {
               this.board[row][col].hasBomb = true;
               break loop1;
@@ -133,8 +133,8 @@ export class Game extends Component {
       return
     }
     else if (this.board[x][y].hasBomb) {
-      for (let row=0; row<SIDES; row++) {
-        for (let col=0; col<SIDES; col++) {
+      for (let row=0; row<this.props.sides; row++) {
+        for (let col=0; col<this.props.sides; col++) {
           if (this.board[row][col].hasBomb) {
             this.board[row][col].value = '💣';
           }
@@ -210,8 +210,8 @@ export class Game extends Component {
           cells={this.state.cells}
           onClick={(x, y) => this.handleClick(x, y)}
           onContextMenu={(e, x, y) => this.handleRightClick(e, x, y)}
-          sides={SIDES}
-          bombs={BOMBS}
+          sides={this.props.sides}
+          bombs={this.props.bombs}
         />
       </div>
     )
