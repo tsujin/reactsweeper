@@ -85,3 +85,23 @@
   float: right;
   margin: 5px;
 }
+
+/* buttons */
+.button-row {
+  display: grid;
+}
+
+.beginner, .intermediate, .expert {
+  margin: 5px;
+}
+.beginner {
+  background: #4bf442;
+}
+
+.intermediate {
+  background: #66bcff;
+}
+
+.expert {
+  background: #ff0000;
+}
