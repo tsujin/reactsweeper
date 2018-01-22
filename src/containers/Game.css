@@ -12,18 +12,18 @@
 
 /* cells */
 .cell, .cell-closed {
-  float: left;
+  display: inline-block;
   height: 25px;
   width: 25px;
   text-align: center;
   padding: 0;
   margin-right: -1px;
   margin-top: -1px;
+  vertical-align: bottom;
 }
 
 .cell {
   background: lightgray;
-  border-style: outset;
   border-top: 2px outset white;
   border-left: 2px outset white;
   border-bottom: 2px outset gray;
@@ -31,7 +31,7 @@
 }
 
 .cell-closed {
-  background: #lightgray;
+  background: lightgray;
   border: 1px solid #999;
 }
 
@@ -45,6 +45,11 @@
   border-bottom: 2px outset white;
   border-left: 2px outset gray;
   border-top: 2px outset gray;
+}
+
+.board-row {
+  font-size: 0;
+  white-space: nowrap;
 }
 
 .board-row:after {
@@ -94,6 +99,7 @@
 .beginner, .intermediate, .expert {
   margin: 5px;
 }
+
 .beginner {
   background: #4bf442;
 }
